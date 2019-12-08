@@ -1,6 +1,9 @@
-// just seeing if github works bois
+package project;
 
-public static void main(String<args>)
-{
- System.out.print("");
+public class Tester {
+	
+	
+	
+	
+	
 }
