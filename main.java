@@ -204,8 +204,10 @@ public class main {
 			
 			
 			
-			if (input.equals("Q"))		//Exits the program by setting the boolean to true
+			if (input.equals("Q"))	{	//Exits the program by setting the boolean to true
 				close=true;
+				System.out.println("Closing the program");
+			}
 			if (input.contentEquals("A")) {
 				System.out.println("Enter your First Name");
 				String m1 = scan.next();
