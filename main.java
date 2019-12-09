@@ -123,9 +123,11 @@ public class main {
 				acctFirst=scan.next();
 				acctLast=scan.next();
 				accountName=acctFirst + " " + acctLast;
+				boolean selected2 = true;
 				
 				for (int i = 0; i<culist.size(); i++) {
 					if (accountName.contentEquals(culist.get(i).getName())) {		//try to find the username in the arraylist
+						selected2=false;
 						while(!close) {		//if a match was found, enter the program
 							System.out.println("welcome to the customer program");
 							System.out.println("Enter M to see a list of the movies and their price");
@@ -145,12 +147,14 @@ public class main {
 							if(input.equals("P")) {
 								System.out.println("Please enter the theater number of the movie you wish to see");
 								input=scan.next();
+								boolean selected = true;
 								for (int x=0; x<movlist.size(); x++) {
 									if (Integer.parseInt(input)==movlist.get(x).getTheater()) {//if the movie theater is found, add the total to the amount spent and print out the movie name
 										culist.get(i).addSpent(movlist.get(x).getPrice());
 										System.out.println("you have selected "+ movlist.get(x).getName());
+										selected=false;
 									}
-									if ((x+1)==movlist.size()) {		//if the movie theater is not found display message
+									if ((x+1)==movlist.size()&& selected) {		//if the movie theater is not found display message
 										System.out.println("that theater does not exist");
 									}
 									
@@ -168,7 +172,7 @@ public class main {
 						
 						
 					}
-					if (i+1== culist.size()) {				//if the user name was not found in the list
+					if (i+1== culist.size()&&selected2) {				//if the user name was not found in the list
 						System.out.println("Wrong user name, or not in the system");
 					}
 					
@@ -178,6 +182,8 @@ public class main {
 				
 				
 			}
+			
+			
 			
 			if (input.equals("Q"))		//Exits the program by setting the boolean to true
 				close=true;
