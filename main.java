@@ -1,27 +1,36 @@
 import java.util.*;
+import java.io.*;
 
 
 public class main {
 	
 	
 	
-	public static void main (String args []) {
+	public static void main (String args []) throws FileNotFoundException {
 		
 		Scanner scan = new Scanner (System.in);		//scanner to read in the user's input
 		String password = "password";				//password for the manager's account
 		boolean close = false;						//boolean to close the program
 		String input;								//string for the user's input
-		Scanner acct = new Scanner("accounts.text");	//scanner to initialize the customer's accounts
+		
+		File read = new File("accounts.txt");
+		
+		
+		Scanner acct = new Scanner(read);	//scanner to initialize the customer's accounts
+		
 		String accountName;
 		
 		
 		//initialize the customer's accounts before running the main program
 		String first;		//holds the customer's firstname from the text file
+		//System.out.println(first);
 		String second;		//holds the customer's last name from the text file
 		String name;		//holds the combined name 
 		String email;		//holds the customer's email from the text file
 		double spent;		//holds the amount spent from the text file
 		int acctnum = 0;	//not sure yet
+		
+		ArrayList<customer> culist = new ArrayList<customer>( );
 		
 		
 		
@@ -32,8 +41,7 @@ public class main {
 			name = first + " "+ second;	//Concatenate the names together
 			email = acct.next();		//third line should be email
 			spent = acct.nextDouble();	//fourth line should be amount spent
-			 
-			new customer(name, email, spent);	//create a new customer object from the variables that were read in from the accounts file
+			culist.add(new customer(first, second, email, spent));	//create a new customer object from the variables that were read in from the accounts file
 			
 			
 		}
@@ -44,6 +52,10 @@ public class main {
 		System.out.println("Welcome to the theater program");
 		System.out.println("Enter M or C for manager or customer acccount");
 		System.out.println("Enter E to close the program");
+		
+		//System.out.println(culist.get(0).getEmail());
+		
+		
 		
 		while (!close){
 			input=scan.next();
