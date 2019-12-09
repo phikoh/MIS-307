@@ -17,7 +17,7 @@ public class customer {
 	
 	
 	public String getName() {		//method to get the customer's name
-		return first+second;
+		return first+" " + second;
 		
 	}
 	
