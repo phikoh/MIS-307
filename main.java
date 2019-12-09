@@ -64,16 +64,17 @@ public class main {
 		String acctFirst;
 		String acctLast;
 		
-		System.out.println("Welcome to the theater program");
-		System.out.println("Enter M or C for manager or customer acccount");
-		System.out.println("Enter E to close the program");
-		System.out.println("Enter A to make a new account");
+		
 		
 		//System.out.println(culist.get(0).getEmail());
 		
 		
 		
 		while (!close){
+			System.out.println("Welcome to the theater program");
+			System.out.println("Enter M or C for manager or customer acccount");
+			System.out.println("Enter E to close the program");
+			System.out.println("Enter A to make a new account");
 			input=scan.next();
 			if (input.contentEquals("M")){			//logic path for manager
 				System.out.println("Enter Password");
@@ -83,6 +84,7 @@ public class main {
 					System.out.println("Enter R to run a report on the customers");
 					System.out.println("Enter M to see a list of the movies");
 					System.out.println("Enter Q to exit the program");
+					System.out.println("Enter A to manually enter a movie");
 					while(!close) {
 						input=scan.next();
 						
@@ -108,6 +110,23 @@ public class main {
 						else if (input.equals("Q")) {		//sets boolean to true, closes the program
 							close=true;
 							System.out.println("Closing the program");
+						}else if (input.contentEquals("A")) {
+							scan.nextLine();
+							System.out.println("Enter the movie title");
+							String x1 = scan.nextLine();
+							System.out.println("Enter the movie's price");
+							double x2 = scan.nextDouble();
+							System.out.println("Enter the movie's theater number");
+							int x3 = scan.nextInt();
+							scan.nextLine();
+							System.out.println("Enter the movie's rating");
+							String x4 = scan.nextLine();
+							
+							
+							movlist.add(new movies(x1,x2,x3,x4));
+							
+							
+							
 						}
 						System.out.println("Enter R to run a report on the customers");
 						System.out.println("Enter M to see a list of the movies");
@@ -139,8 +158,8 @@ public class main {
 							
 							if (input.contentEquals("M")) {					//prints out the movie, the theater number and the price
 								for (int x = 0; x<movlist.size(); x++) {
-									System.out.print(movlist.get(x).getName() + "theater number " + movlist.get(x).getTheater());
-									System.out.println("  $" + movlist.get(x).getPrice());
+									System.out.print(movlist.get(x).getName() + " theater number " + movlist.get(x).getTheater());
+									System.out.println(" Rating " + movlist.get(x).getRating() + "  $" + movlist.get(x).getPrice());
 									System.out.println();
 									}
 							}
@@ -187,7 +206,21 @@ public class main {
 			
 			if (input.equals("Q"))		//Exits the program by setting the boolean to true
 				close=true;
-			
+			if (input.contentEquals("A")) {
+				System.out.println("Enter your First Name");
+				String m1 = scan.next();
+				System.out.println("Enter your last Name");
+				String m2= scan.next();
+				System.out.println("Enter your email address");
+				String m3=scan.next();
+				int m4=0;
+
+				
+				culist.add(new customer(m1, m2, m3, m4));		//construsts a new customer with the input
+				System.out.println("New Accunt Created!");
+				
+				
+			}
 		}
 		
 		
