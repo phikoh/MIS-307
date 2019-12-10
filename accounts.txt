@@ -1,28 +1,34 @@
+acct1
 John Doe
 jdoe369@hotmail.com
-0.0
-0
+13.95
+1
 
+acct2
 Ellie Weisel
 eweisle@gmail.com
 34.5
 4
 
+acct3
 Green Jenkins
 leroy69@gmail.com
 181.0
 28
 
+acct4
 Marcus Spears
 sparticus@mchsi.net
 9.95
 1
 
+acct5
 Nancy Drew
 drewzy@iastate.edu
 14.9
 2
 
+acct6
 Illman Bestname
 imsoillitscray@gmail.com
 145.85

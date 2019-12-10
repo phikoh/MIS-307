@@ -1,4 +1,6 @@
 
+//@author Phillip Kohler Marcus Haintschel
+
 public class customer {
 	
 	private String username;		//holds the customer's username

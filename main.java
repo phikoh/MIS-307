@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-
+//@author Phillip Kohler Marcus Haintschel
 public class main {
 	
 	
@@ -70,7 +70,8 @@ public class main {
 		boolean manager = false;			//to close the manager part of the logic tree when they exit
 		boolean customer = false;			//to close the customer part of the logic tree when they exit
 		boolean print = true;				//to stop extra text from printing upon program close
-		
+		boolean printm = true;
+		boolean printc = true;
 		//System.out.println(culist.get(0).getEmail());
 		
 		
@@ -126,7 +127,7 @@ public class main {
 						}
 						else if (input.equals("Q")) {		//sets boolean to true, closes the program
 							manager=true;
-							print=false;					//sets boolean to false, cancels the next instruction print
+							printm=false;					//sets boolean to false, cancels the next instruction print
 							System.out.println("Closing the Manager program");
 						}else if (input.contentEquals("A")) {
 							scan.nextLine();
@@ -146,7 +147,7 @@ public class main {
 							
 							
 						}
-						if (print) {
+						if (printm) {
 						System.out.println("Enter R to run a report on the customers");
 						System.out.println("Enter M to see a list of the movies");
 						System.out.println("Enter Q to exit the program");
@@ -204,11 +205,11 @@ public class main {
 							
 							if(input.contentEquals("Q")) {		//if the user enters q, the program quits
 								customer=true;
-								print=false;					//prevents more text from printing
-								System.out.println("Closing the program");
+								printc=false;					//prevents more text from printing
+								System.out.println("Closing the customer program");
 								
 							}
-							if(print) {
+							if(printc) {
 								System.out.println("welcome to the customer program");
 								System.out.println("Enter M to see a list of the movies and their price");
 								System.out.println("Enter P to select the movie that you would like to see");
@@ -222,6 +223,7 @@ public class main {
 						
 						
 					}
+					
 					if (i+1== culist.size()&&selected2) {				//if the user name was not found in the list
 						System.out.println("Wrong user name, or not in the system");
 					}
@@ -273,6 +275,7 @@ public class main {
 			PrintWriter printAcct = new PrintWriter(fileacct);				//print write for the accounts
 			
 			for (int i = 0; i<culist.size(); i++) {					//for each of the items in the array list
+				printAcct.println(culist.get(i).getUser());				//get the username of the customer
 				printAcct.println(culist.get(i).getName());			//get the name of the customer and write to file
 				printAcct.println(culist.get(i).getEmail());			//get the customer's email and print it to the file
 				printAcct.println(culist.get(i).getSpent());			//get the amount spent and write it to the file
