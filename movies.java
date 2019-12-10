@@ -1,4 +1,4 @@
-//@author Phillip Kohler Marcus Haintschel
+//@author Phillip Kohler Marcus Heintschel
 
 public class movies {
 

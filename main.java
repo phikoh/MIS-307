@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-//@author Phillip Kohler Marcus Haintschel
+//@author Phillip Kohler Marcus Heintschel
 public class main {
 	
 	
