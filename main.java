@@ -17,19 +17,23 @@ public class main {
 		Scanner acct = new Scanner(read);	//scanner to initialize the customer's accounts		
 		
 		//initialize the customer's accounts before running the main program
-		String first;		//holds the customer's firstname from the text file
+		String first;		//holds the customer's first name from the text file
 		//System.out.println(first);
+		String username;	//holds the customer's username
 		String second;		//holds the customer's last name from the text file
 		String email;		//holds the customer's email from the text file
 		double spent;		//holds the amount spent from the text file
-		ArrayList<customer> culist = new ArrayList<customer>( );		//arraylist of all the customer accounts
+		int movieCount;		//holds the number of movies that the customer has seen
+		ArrayList<customer> culist = new ArrayList<customer>( );		//array list of all the customer accounts
 
 		while (acct.hasNext()) {		//loop to read in all of the customer accounts
+			username=acct.next();
 			first=acct.next();			//first line of file should be customer first name
 			second=acct.next();			//second line of file should be last name
 			email = acct.next();		//third line should be email
 			spent = acct.nextDouble();	//fourth line should be amount spent
-			culist.add(new customer(first, second, email, spent));	//create a new customer object from the variables that were read in from the accounts file
+			movieCount = acct.nextInt();//fifth line should be the number of movies seen
+			culist.add(new customer(username, first, second, email, spent, movieCount));	//create a new customer object from the variables that were read in from the accounts file
 		}
 		
 		File movies = new File("movie_data.txt");		//file for all of the movies
@@ -40,7 +44,7 @@ public class main {
 		double price;			//holds the movie's price form the file
 		int theaterNumber;		//holds the movie's theater number from the file
 		String rating;			//holds the movie's rating from the file
-		ArrayList<movies> movlist = new ArrayList<movies>();			//arraylist of all of the movies
+		ArrayList<movies> movlist = new ArrayList<movies>();			//array list of all of the movies
 		
 		
 		while (movie.hasNext()) {								//loop to read in all of the movies and initialize them as opbjects in the arraylist
@@ -49,7 +53,7 @@ public class main {
 			price = Double.parseDouble(movie.nextLine());				//second line should be the price
 			theaterNumber = Integer.parseInt(movie.nextLine());			//third line should be the theater number	
 			rating = movie.nextLine();							//fourth line should be the rating
-			movlist.add(new movies (title, price, theaterNumber, rating));	//add the movie to the arraylist with the paramaters that were just read in 
+			movlist.add(new movies (title, price, theaterNumber, rating));	//add the movie to the array list with the paramaters that were just read in 
 			
 		}
 		
@@ -61,21 +65,30 @@ public class main {
 		
 		
 		String accountName;
-		String acctFirst;
-		String acctLast;
 		
 		
+		boolean manager = false;			//to close the manager part of the logic tree when they exit
+		boolean customer = false;			//to close the customer part of the logic tree when they exit
+		boolean print = true;				//to stop extra text from printing upon program close
 		
 		//System.out.println(culist.get(0).getEmail());
 		
 		
-		
+		System.out.println("Welcome to the theater program");
+		System.out.println("Enter M or C for manager or customer acccount");
+		System.out.println("Enter E to close the program");
+		System.out.println("Enter A to make a new account");
+		System.out.println("Enter Q to quit the program");
 		while (!close){
-			System.out.println("Welcome to the theater program");
-			System.out.println("Enter M or C for manager or customer acccount");
-			System.out.println("Enter E to close the program");
-			System.out.println("Enter A to make a new account");
+			
 			input=scan.next();
+			
+			if (input.equals("Q"))	{	//Exits the program by setting the boolean to true
+				close=true;
+				print = false;
+				System.out.println("Closing the program");
+			}
+			
 			if (input.contentEquals("M")){			//logic path for manager
 				System.out.println("Enter Password");
 				input=scan.next();
@@ -85,17 +98,21 @@ public class main {
 					System.out.println("Enter M to see a list of the movies");
 					System.out.println("Enter Q to exit the program");
 					System.out.println("Enter A to manually enter a movie");
-					while(!close) {
+					while(!manager) {
 						input=scan.next();
 						
 						
 						if (input.equals("R")) {				//if the user enters R print out a list of the customer's name and their amount spent
+							int moviesSeen=0;
 							for (int i=0; i<culist.size(); i++) {
 								System.out.print(culist.get(i).getName() + " Amount Spent $");
 								System.out.println(culist.get(i).getSpent());
 								System.out.println();
+								moviesSeen += culist.get(i).getCount();
+					
 								
 							}
+							System.out.println("total ticket sames are: " + moviesSeen);
 						}
 						else if(input.equals("M")) {		//if M is entered, print put the movie names and the price of them
 							
@@ -108,8 +125,9 @@ public class main {
 							}
 						}
 						else if (input.equals("Q")) {		//sets boolean to true, closes the program
-							close=true;
-							System.out.println("Closing the program");
+							manager=true;
+							print=false;					//sets boolean to false, cancels the next instruction print
+							System.out.println("Closing the Manager program");
 						}else if (input.contentEquals("A")) {
 							scan.nextLine();
 							System.out.println("Enter the movie title");
@@ -128,9 +146,11 @@ public class main {
 							
 							
 						}
+						if (print) {
 						System.out.println("Enter R to run a report on the customers");
 						System.out.println("Enter M to see a list of the movies");
 						System.out.println("Enter Q to exit the program");
+						}
 					}
 					
 				}else {
@@ -138,20 +158,20 @@ public class main {
 				}
 			}
 			if (input.equals("C")) {					//for the customer account
-				System.out.println("Please enter your account name");
-				acctFirst=scan.next();
-				acctLast=scan.next();
-				accountName=acctFirst + " " + acctLast;
-				boolean selected2 = true;
+				System.out.println("Please enter your username");
+
+				accountName=scan.next();
+				boolean selected2 = true;		//boolean to print out message that no username was found with was inputted
 				
 				for (int i = 0; i<culist.size(); i++) {
-					if (accountName.contentEquals(culist.get(i).getName())) {		//try to find the username in the arraylist
+					if (accountName.contentEquals(culist.get(i).getUser())) {		//try to find the username in the arraylist
 						selected2=false;
-						while(!close) {		//if a match was found, enter the program
-							System.out.println("welcome to the customer program");
-							System.out.println("Enter M to see a list of the movies and their price");
-							System.out.println("Enter P to select the movie that you would like to see");
-							System.out.println("Enter Q to quit the program");
+						System.out.println("welcome to the customer program, " + culist.get(i).getName());
+						System.out.println("Enter M to see a list of the movies and their price");
+						System.out.println("Enter P to select the movie that you would like to see");
+						System.out.println("Enter Q to quit the program");
+						
+						while(!customer) {		//if a match was found, enter the program
 							
 							
 							input=scan.next();
@@ -172,6 +192,7 @@ public class main {
 										culist.get(i).addSpent(movlist.get(x).getPrice());
 										System.out.println("you have selected "+ movlist.get(x).getName());
 										selected=false;
+										culist.get(i).countUp();
 									}
 									if ((x+1)==movlist.size()&& selected) {		//if the movie theater is not found display message
 										System.out.println("that theater does not exist");
@@ -180,11 +201,21 @@ public class main {
 								}
 								
 							}
+							
 							if(input.contentEquals("Q")) {		//if the user enters q, the program quits
-								close=true;
+								customer=true;
+								print=false;					//prevents more text from printing
 								System.out.println("Closing the program");
 								
 							}
+							if(print) {
+								System.out.println("welcome to the customer program");
+								System.out.println("Enter M to see a list of the movies and their price");
+								System.out.println("Enter P to select the movie that you would like to see");
+								System.out.println("Enter Q to quit the program");
+								}
+							
+							
 							
 							
 						}
@@ -202,13 +233,9 @@ public class main {
 				
 			}
 			
-			
-			
-			if (input.equals("Q"))	{	//Exits the program by setting the boolean to true
-				close=true;
-				System.out.println("Closing the program");
-			}
 			if (input.contentEquals("A")) {
+				System.out.println("Enter a username");
+				String m8 = scan.next();
 				System.out.println("Enter your First Name");
 				String m1 = scan.next();
 				System.out.println("Enter your last Name");
@@ -218,10 +245,20 @@ public class main {
 				int m4=0;
 
 				
-				culist.add(new customer(m1, m2, m3, m4));		//construsts a new customer with the input
+				culist.add(new customer(m8,m1, m2, m3, m4, 0));		//Constructs a new customer with the input
 				System.out.println("New Accunt Created!");
 				
 				
+			}
+			input="z";
+			
+			
+			if (print) {
+			System.out.println("Welcome to the theater program");
+			System.out.println("Enter M or C for manager or customer acccount");
+			System.out.println("Enter E to close the program");
+			System.out.println("Enter A to make a new account");
+			System.out.println("Enter Q to quit the program");
 			}
 		}
 		
@@ -231,25 +268,26 @@ public class main {
 		////////////////////////////////////////////////////////////////////////////////////////////
 		//Should only run after the user has exited the program
 		
-		if (close) {			//when the program is ended, the two arraylists have to be written to their respective files
+		if (close) {			//when the program is ended, the two array lists have to be written to their respective files
 			FileWriter fileacct = new FileWriter("accounts.txt");			//file writer for the accounts
 			PrintWriter printAcct = new PrintWriter(fileacct);				//print write for the accounts
 			
-			for (int i = 0; i<culist.size(); i++) {					//for each of the items in the arraylist
+			for (int i = 0; i<culist.size(); i++) {					//for each of the items in the array list
 				printAcct.println(culist.get(i).getName());			//get the name of the customer and write to file
 				printAcct.println(culist.get(i).getEmail());			//get the customer's email and print it to the file
 				printAcct.println(culist.get(i).getSpent());			//get the amount spent and write it to the file
+				printAcct.println(culist.get(i).getCount());			//get the amount of movies seen
 				printAcct.println();								//write a blank line to the file
 			}
 			
 			FileWriter filemov = new FileWriter("movie_data.txt");
 			PrintWriter printMov = new PrintWriter(filemov);			
 			
-			for (int i =0; i<movlist.size(); i++) {					//for each of the items in the movie arraylist
+			for (int i =0; i<movlist.size(); i++) {					//for each of the items in the movie array list
 				printMov.println();   								//print blank line in beginning
 				printMov.println(movlist.get(i).getName());			//Print the name of the movie
 				printMov.println(movlist.get(i).getPrice());		//print the price of the movie
-				printMov.println(movlist.get(i).getTheater());		//print the theaternumber
+				printMov.println(movlist.get(i).getTheater());		//print the theater number
 				printMov.println(movlist.get(i).getRating());		//print the movie's rating
 			
 			}
@@ -262,6 +300,7 @@ public class main {
 			printMov.close();
 			scan.close();
 			acct.close();
+			movie.close();
 			
 			
 			
